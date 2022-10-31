@@ -15,25 +15,30 @@ btns.forEach((btn) => {
 });
 
 function playGame() {
-  if (compScore === 0 && playerScore === 0 && ties === 0) {
-    // this means that a new game is being played  now
-    while (results.firstChild) results.removeChild(results.lastChild);
-  }
+
+  while (results.firstChild) results.removeChild(results.lastChild);
 
   let roundResult = playRound(this.dataset.choice, getComputerChoice());
 
   const p = document.createElement("p");
   p.textContent = roundResult;
   results.appendChild(p);
+  p.classList.add("classname","round");
+
 
   if (roundResult.includes("win")) {
     playerScore++;
-    p.style.background = 'green';
+    p.classList.add("success");
+    p.classList.remove("fail");
   } else if (roundResult.includes("lose")) {
     compScore++;
-    p.style.background = 'red';
-  } else 
+    p.classList.add("fail")
+    p.classList.remove("success");
+  } else {
     ties++;
+    p.classList.remove("fail")
+    p.classList.remove("success")
+  }
 
 
    
@@ -41,7 +46,7 @@ function playGame() {
 
   // game over if this happens
   if (playerScore === 5 || compScore === 5) {
-    printResult(playerScore, compScore, ties);
+    printResult(playerScore, compScore, ties, p);
     playerScore = compScore = ties = 0;
   }
 }
@@ -79,20 +84,16 @@ function playRound(user, comp) {
   return message;
 }
 
-function printResult(wins, losses, ties) {
-  const p = document.createElement("p");
+function printResult(wins, losses, ties, el) {
   let output = `Total Score: \nWins: ${wins}\nLosses: ${losses}\nTies: ${ties}\n`;
 
   if (wins > losses) {
     output += "You win the tournament!";
-    p.style.background = "green";
   } else if (losses > wins) {
     output += "You lose the tournament!";
-    p.style.background = "red";
   } else {
     output += "You tied in the tournament!";
   }
 
-  p.textContent = output;
-  results.appendChild(p);
+  el.textContent = output;
 }

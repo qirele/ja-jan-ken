@@ -2,14 +2,31 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  transition: all .5s;
+  transition: all 0.5s;
+}
+
+body {
+  background-color: #70a0b0;
+  background: linear-gradient(135deg, #d2f6ff55 25%, transparent 25%) -40px 0/
+      80px 80px,
+    linear-gradient(225deg, #d2f6ff 25%, transparent 25%) -40px 0/ 80px 80px,
+    linear-gradient(315deg, #d2f6ff55 25%, transparent 25%) 0px 0/ 80px 80px,
+    linear-gradient(45deg, #d2f6ff 25%, #70a0b0 25%) 0px 0/ 80px 80px;
 }
 
 main {
   max-width: 1000px;
   margin: 0 auto;
-  background-color: beige;
   min-height: 100vh;
+
+  background-color: #d0d0d0;
+  background: repeating-linear-gradient(
+    -45deg,
+    #fdf9f9,
+    #fdf9f9 19.5px,
+    #d0d0d0 11.5px,
+    #d0d0d0 20.5px
+  );
 }
 
 button {
@@ -19,8 +36,20 @@ button {
   cursor: pointer;
 }
 
+
 button:hover {
-  background-color: aqua;
+  background-color: #d51010;
+  opacity: 1;
+  background-image: radial-gradient(circle at center center, #0974f9, #d51010),
+    repeating-radial-gradient(
+      circle at center center,
+      #0974f9,
+      #0974f9,
+      7px,
+      transparent 54px,
+      transparent 7px
+    );
+  background-blend-mode: multiply;
 }
 
 img {
@@ -30,4 +59,49 @@ img {
 .choices {
   display: flex;
   justify-content: space-around;
+}
+
+.live-score {
+  text-align: center;
+}
+
+.round {
+  border-radius: 29px 40px 40px 0px;
+  padding: 50px;
+  font-size: 25px;
+}
+
+.results {
+  display: flex;
+  justify-content: center;
+}
+
+
+.success {
+  border: 5px solid rgb(0, 228, 87);
+}
+
+.fail {
+  border: 25px double #a42222;
+}
+
+.classname {
+  animation-name: cssAnimation;
+  animation-duration: 1s;
+  animation-iteration-count: 1;
+  animation-timing-function: ease;
+  animation-fill-mode: forwards;
+}
+
+@keyframes cssAnimation {
+  0% {
+    transform: rotate(0deg) scale(0) skew(0deg) translateY(0px);
+  }
+  50% {
+    transform: rotate(30deg) scale(2) skew(0deg) translateY(100px);
+  }
+  100% {
+    transform: rotate(0deg) scale(1) skew(0deg) translateY(0px);
+  }
+
 }
