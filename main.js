@@ -2,21 +2,47 @@ const choices = ["rock", "paper", "scissors"];
 
 const btns = document.querySelectorAll(".choices button");
 const results = document.querySelector(".results");
+results.style.whiteSpace = "pre";
 
 let playerScore = 0;
 let compScore = 0;
+let ties = 0;
 
-btns.forEach(btn => {
-
-  btn.addEventListener("click", () => {
-    const p = document.createElement("p");
-    p.textContent = playRound(btn.dataset.choice, getComputerChoice());
-    results.appendChild(p);
-  });
-
+btns.forEach((btn) => {
+  btn.addEventListener("click", playGame);
 });
 
+function playGame() {
+  if (compScore === 0 && playerScore === 0 && ties === 0) {
+    // delete everything in the results div
+    while (results.firstChild) results.removeChild(results.lastChild);
+  }
 
+  let roundResult = playRound(this.dataset.choice, getComputerChoice());
+  console.log(roundResult);
+
+  const p = document.createElement("p");
+  p.textContent = roundResult;
+  results.appendChild(p);
+
+  if (roundResult.includes("win")) playerScore++;
+  else if (roundResult.includes("lose")) compScore++;
+  else ties++;
+
+
+  if (playerScore === 5 || compScore === 5)  {
+    printResult(playerScore, compScore, ties);
+    playerScore = compScore = ties = 0;
+  }
+  
+
+  // let userChoice = getInput();
+  // let computerChoice = getComputerChoice();
+
+  // let message = playRound(userChoice, computerChoice);
+
+  // console.log(message);
+}
 
 function getComputerChoice() {
   const number = Math.floor(Math.random() * 3);
@@ -62,36 +88,20 @@ function playRound(user, comp) {
   return message;
 }
 
-// declare new function called game, in that function
-// repeat 5 times:
-//  generate new random computer number,
-//  ask for a user choice via prompt
-//  playRound
-// keep score of the game
-
-function game() {
-  //let userChoice = getInput();
-  let computerChoice = getComputerChoice();
-
-  let message = playRound(userChoice, computerChoice);
-
-  console.log(message);
-
-}
-
 function printResult(wins, losses, ties) {
-  console.log(`Total score: `);
-  console.log(`Wins: ${wins}`);
-  console.log(`Losses: ${losses}`);
-  console.log(`Ties: ${ties}`);
+
+  let output = `Total Score: \nWins: ${wins}\nLosses: ${losses}\nTies: ${ties}\n`;
 
   if (wins > losses) {
-    console.log("You win the tournament!");
+    output += ("You win the tournament!");
   } else if (losses > wins) {
-    console.log("You lose the tournament!");
+    output += ("You lose the tournament!");
   } else {
-    console.log("You tied in the tournament!");
+    output += ("You tied in the tournament!");
   }
+
+  const p = document.createElement("p");
+  p.textContent = output;  
+  results.appendChild(p);
+
 }
-
-
