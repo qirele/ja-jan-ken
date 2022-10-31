@@ -14,50 +14,34 @@ btns.forEach((btn) => {
 
 function playGame() {
   if (compScore === 0 && playerScore === 0 && ties === 0) {
-    // delete everything in the results div
+    // this means that a new game is being played  now
     while (results.firstChild) results.removeChild(results.lastChild);
   }
 
   let roundResult = playRound(this.dataset.choice, getComputerChoice());
-  console.log(roundResult);
 
   const p = document.createElement("p");
   p.textContent = roundResult;
   results.appendChild(p);
 
-  if (roundResult.includes("win")) playerScore++;
-  else if (roundResult.includes("lose")) compScore++;
-  else ties++;
+  if (roundResult.includes("win")) {
+    playerScore++;
+    p.style.background = 'green';
+  } else if (roundResult.includes("lose")) {
+    compScore++;
+    p.style.background = 'red';
+  } else 
+    ties++;
 
-
-  if (playerScore === 5 || compScore === 5)  {
+  if (playerScore === 5 || compScore === 5) {
     printResult(playerScore, compScore, ties);
     playerScore = compScore = ties = 0;
   }
-  
-
-  // let userChoice = getInput();
-  // let computerChoice = getComputerChoice();
-
-  // let message = playRound(userChoice, computerChoice);
-
-  // console.log(message);
 }
 
 function getComputerChoice() {
   const number = Math.floor(Math.random() * 3);
   return choices[number];
-}
-
-function getInput() {
-  let userChoice = prompt(`Enter your choice: ${choices}`, "");
-
-  while (userChoice === null || !choices.includes(userChoice.toLowerCase())) {
-    console.log("Bad input. Try again!");
-    userChoice = prompt(`Enter your choice: ${choices}`, "");
-  }
-
-  return userChoice;
 }
 
 function playRound(user, comp) {
@@ -89,19 +73,17 @@ function playRound(user, comp) {
 }
 
 function printResult(wins, losses, ties) {
-
   let output = `Total Score: \nWins: ${wins}\nLosses: ${losses}\nTies: ${ties}\n`;
 
   if (wins > losses) {
-    output += ("You win the tournament!");
+    output += "You win the tournament!";
   } else if (losses > wins) {
-    output += ("You lose the tournament!");
+    output += "You lose the tournament!";
   } else {
-    output += ("You tied in the tournament!");
+    output += "You tied in the tournament!";
   }
 
   const p = document.createElement("p");
-  p.textContent = output;  
+  p.textContent = output;
   results.appendChild(p);
-
 }
