@@ -2,7 +2,9 @@ const choices = ["rock", "paper", "scissors"];
 
 const btns = document.querySelectorAll(".choices button");
 const results = document.querySelector(".results");
+const liveScore = document.querySelector(".live-score");
 results.style.whiteSpace = "pre";
+liveScore.style.whiteSpace = "pre";
 
 let playerScore = 0;
 let compScore = 0;
@@ -33,6 +35,11 @@ function playGame() {
   } else 
     ties++;
 
+
+   
+  liveScore.textContent = `Score\nPlayer: ${playerScore} - Computer: ${compScore}`;
+
+  // game over if this happens
   if (playerScore === 5 || compScore === 5) {
     printResult(playerScore, compScore, ties);
     playerScore = compScore = ties = 0;
@@ -73,17 +80,19 @@ function playRound(user, comp) {
 }
 
 function printResult(wins, losses, ties) {
+  const p = document.createElement("p");
   let output = `Total Score: \nWins: ${wins}\nLosses: ${losses}\nTies: ${ties}\n`;
 
   if (wins > losses) {
     output += "You win the tournament!";
+    p.style.background = "green";
   } else if (losses > wins) {
     output += "You lose the tournament!";
+    p.style.background = "red";
   } else {
     output += "You tied in the tournament!";
   }
 
-  const p = document.createElement("p");
   p.textContent = output;
   results.appendChild(p);
 }

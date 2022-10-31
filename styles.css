@@ -1,0 +1,33 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: all .5s;
+}
+
+main {
+  max-width: 1000px;
+  margin: 0 auto;
+  background-color: beige;
+  min-height: 100vh;
+}
+
+button {
+  display: block;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: aqua;
+}
+
+img {
+  max-width: 200px;
+}
+
+.choices {
+  display: flex;
+  justify-content: space-around;
+}
